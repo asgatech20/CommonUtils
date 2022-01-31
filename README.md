@@ -4,7 +4,7 @@ __An effort to reduce re-writing similar codes across projects.__
 common-utils-android contains some of the commonly used android functions.
 
 ## Utilities
-- [LocalityHelpers](.commonutils/src/main/java/com/asgatech/commonutils/LocalityHelper.kt) - Help to set and update locale of the app.
+- [LocalityHelpers](./commonutils/src/main/java/com/asgatech/commonutils/LocalityHelper.kt) - Help to set and update locale of the app.
 - [PermissionHelpers](./commonutils/src/main/java/com/asgatech/commonutils/permissions/PermissionHandler.kt) - Making it easy to ask and check for app specific permissions.
 - [ImageLoadingHelpers](./commonutils/src/main/java/com/asgatech/commonutils/ImageLoaderHelper.kt) - Used to handle the image loading in the app (Url Image, Bitmap or Drawable resource).
 - [ScreenHelpers](./commonutils/src/main/java/com/asgatech/commonutils/ScreenHelpers.kt) -Obtain the device height and width, also helping to set activity screen to full screen.
