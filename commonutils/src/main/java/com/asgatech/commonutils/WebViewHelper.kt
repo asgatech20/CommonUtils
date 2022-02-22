@@ -16,7 +16,7 @@ class WebViewHelper {
      * Build the WebView with specifying if its rtl or ltr language
      */
     fun setWebViewHtml(webView: WebView, htmlString: String?, isRtlLang: Boolean) {
-        if (htmlString == null) return
+        if (htmlString.isNullOrEmpty()) return
         handleOnPageLoaded(webView, isRtlLang)
         webView.loadData(
             getHtmlString(htmlString, isRtlLang),

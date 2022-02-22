@@ -19,11 +19,13 @@ class ScreenHelpers {
      * Hide the statusBar and set the app to full screen mode
      */
     fun setFullscreen(activity: Activity, viewToHavePadding: View) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) setFullScreenForPieAndLater(activity)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) setFullScreenForRAndLater(activity)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) setFullscreenForLollipopAndLater(
-            activity
-        )
+        when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> setFullScreenForLatestApis(activity)
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.P -> setFullScreenForPieAndLater(activity)
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP -> setFullscreenForLollipopAndLater(
+                activity
+            )
+        }
         paddingTopStatusBar(viewToHavePadding)
     }
 
@@ -43,7 +45,7 @@ class ScreenHelpers {
      * Set the full screen mode for devices that have R version or later
      */
     @RequiresApi(Build.VERSION_CODES.R)
-    private fun setFullScreenForRAndLater(activity: Activity) {
+    private fun setFullScreenForLatestApis(activity: Activity) {
         activity.window.setDecorFitsSystemWindows(false)
         activity.window.insetsController?.apply {
             hide(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
@@ -99,16 +101,16 @@ class ScreenHelpers {
      */
     fun getScreenWidth(context: Activity): Int {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            getScreenWidthForRAndLater(context)
+            getScreenWidthForLatestApis(context)
         } else {
-            getScreenWidthForBelowR(context)
+            getScreenWidthForOlderApis(context)
         }
     }
 
     /**
      * Obtain the width of the screen for devices with android version < R
      */
-    private fun getScreenWidthForBelowR(context: Activity): Int {
+    private fun getScreenWidthForOlderApis(context: Activity): Int {
         val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val dm = DisplayMetrics()
         @Suppress("DEPRECATION")
@@ -120,7 +122,7 @@ class ScreenHelpers {
      * Obtain the width of the screen for devices with android version > R
      */
     @RequiresApi(Build.VERSION_CODES.R)
-    private fun getScreenWidthForRAndLater(context: Activity): Int {
+    private fun getScreenWidthForLatestApis(context: Activity): Int {
         val windowMetrics: WindowMetrics = context.windowManager.currentWindowMetrics
         val insets: Insets = windowMetrics.windowInsets
             .getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())

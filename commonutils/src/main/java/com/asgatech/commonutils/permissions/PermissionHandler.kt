@@ -27,11 +27,9 @@ class PermissionHandler {
      * Check if certain permissions are granted or not.
      */
     fun isPermissionGranted(context: Context, permissions: Array<String>): Boolean {
-        val grantedOnes: MutableList<String> = ArrayList()
-        for (permission in permissions) {
-            if (isPermissionGranted(context, permission)) grantedOnes.add(permission)
-        }
-        return grantedOnes.size == permissions.size
+        for (permission in permissions)
+            if (!isPermissionGranted(context, permission)) return false
+        return true
     }
 
     /**
@@ -43,11 +41,7 @@ class PermissionHandler {
         permissionCallback: PermissionsCallback
     ) {
         this.permissionCallback = permissionCallback
-        ActivityCompat.requestPermissions(
-            context,
-            arrayOf(permission),
-            PERMISSION_REQ
-        )
+        askForPermissions(context, arrayOf(permission), permissionCallback)
     }
 
     /**
